@@ -65,33 +65,26 @@ CITIES = {
         "epsg":     "EPSG:3006",  # SWEREF 99 TM
         "osm_keyword": "bänk",
         "municipal_api": {
-            "type": "wfs_geoserver",
-            # Requires a free API key from: https://openstreetgs.stockholm.se/
-            # Set env var STOCKHOLM_API_KEY or replace the placeholder below.
+            # STATUS (April 2026): No bench layer found in Trafikkontoret WFS.
+            #
+            # API key obtained from https://openstreetgs.stockholm.se/
+            # Key: ba3fc144-2f3c-46a0-9a0d-79256c75a9be
+            #
+            # The Trafikkontoret WFS (87 layers) covers road/traffic infrastructure only.
+            # It includes waste bins (Skrapkorg), toilets (Toalett), lighting
+            # (Belysningsmontage) – but NOT benches (bänkar).
+            #
+            # Stockholm bench data is managed by a different city department
+            # (likely Exploateringskontoret / Parkförvaltningen) and is not
+            # currently published as open data. Stockholm is OSM-only for now.
+            #
+            # To check for new layers in the future:
+            #   GET https://openstreetgs.stockholm.se/geoservice/api/{KEY}/wfs
+            #       ?service=WFS&version=2.0.0&request=GetCapabilities
+            "type": "none",
+            "api_key": "ba3fc144-2f3c-46a0-9a0d-79256c75a9be",
             "base_url": "https://openstreetgs.stockholm.se/geoservice/api/{api_key}/wfs",
-            "api_key_env": "STOCKHOLM_API_KEY",
-            "layers": [
-                {
-                    # Exact layer name to confirm via GetCapabilities.
-                    # Likely candidates: od_gis:Parkinventarier_Punkt
-                    # or od_gis:Sittmobler_Punkt
-                    # Run: GET base_url?request=GetCapabilities to list all layers.
-                    "name": "od_gis:Parkinventarier_Punkt",
-                    "cql_filter": None,  # Filter client-side after fetch
-                    "source_tag": "Stockholm_open_data",
-                    "field_map": {
-                        # Update these after inspecting the actual schema via GetCapabilities
-                        "feature_id":        "OBJECTID",
-                        "bench_type":        "KATEGORI",
-                        "material":          "MATERIAL",
-                        "location_name":     "NAMN",
-                        "maintenance_class": None,
-                        "updated_date":      "LAST_EDITED_DATE",
-                    },
-                    "bench_filter_field": "KATEGORI",   # field to filter on client-side
-                    "bench_filter_values": ["Bänk", "Sittelement", "Bänkbord"],
-                },
-            ],
+            "layers": [],
         },
     },
 
