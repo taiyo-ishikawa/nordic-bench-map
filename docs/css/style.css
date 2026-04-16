@@ -1,0 +1,227 @@
+/* =====================================================================
+   Nordic Bench Map – Stylesheet
+   ===================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --font:    'Inter', system-ui, sans-serif;
+  --bg:      #f4f5f7;
+  --surface: #ffffff;
+  --border:  #dde1e7;
+  --text:    #1a1d23;
+  --muted:   #6b7280;
+
+  /* City colours */
+  --c-helsinki:   #2563eb;
+  --c-stockholm:  #16a34a;
+  --c-copenhagen: #dc2626;
+  --c-oslo:       #9333ea;
+
+  /* Source colours (legend) */
+  --s-municipal: #f59e0b;
+  --s-osm:       #06b6d4;
+  --s-merged:    #8b5cf6;
+}
+
+body {
+  font-family: var(--font);
+  background:  var(--bg);
+  color:       var(--text);
+  height:      100vh;
+  display:     flex;
+  flex-direction: column;
+  overflow:    hidden;
+}
+
+/* ── Header ──────────────────────────────────────────────────────── */
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 1.25rem;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-shrink: 0;
+  z-index: 1000;
+}
+
+header h1 {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.city-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.city-tab {
+  border: none;
+  border-radius: 6px;
+  padding: 5px 13px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--bg);
+  color: var(--muted);
+  transition: background 0.15s, color 0.15s;
+}
+.city-tab.active       { color: #fff; }
+.city-tab[data-city="all"]         { background: #374151; color: #fff; }
+.city-tab[data-city="helsinki"]    { --cc: var(--c-helsinki); }
+.city-tab[data-city="stockholm"]   { --cc: var(--c-stockholm); }
+.city-tab[data-city="copenhagen"]  { --cc: var(--c-copenhagen); }
+.city-tab[data-city="oslo"]        { --cc: var(--c-oslo); }
+.city-tab.active { background: var(--cc); }
+
+.source-legend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.legend-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+/* ── Layout ──────────────────────────────────────────────────────── */
+.main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── Map ─────────────────────────────────────────────────────────── */
+#map {
+  flex: 1;
+  height: 100%;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────────── */
+#sidebar {
+  width: 320px;
+  min-width: 260px;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.sidebar-section {
+  padding: 1rem 1.125rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-section h2 {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+/* ── City stat cards ─────────────────────────────────────────────── */
+.city-card {
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.city-card:hover   { border-color: var(--muted); }
+.city-card.active  { border-width: 2px; }
+
+.city-card[data-city="helsinki"].active  { border-color: var(--c-helsinki);  }
+.city-card[data-city="stockholm"].active { border-color: var(--c-stockholm); }
+.city-card[data-city="copenhagen"].active{ border-color: var(--c-copenhagen);}
+.city-card[data-city="oslo"].active      { border-color: var(--c-oslo);      }
+
+.city-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.city-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.city-card[data-city="helsinki"]   .city-dot { background: var(--c-helsinki);  }
+.city-card[data-city="stockholm"]  .city-dot { background: var(--c-stockholm); }
+.city-card[data-city="copenhagen"] .city-dot { background: var(--c-copenhagen);}
+.city-card[data-city="oslo"]       .city-dot { background: var(--c-oslo);      }
+
+.city-card-name  { font-weight: 700; font-size: 0.875rem; }
+.city-card-total { margin-left: auto; font-size: 1.1rem; font-weight: 800; }
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.stat-row span:last-child { font-weight: 600; color: var(--text); }
+
+/* ── Source breakdown bar ────────────────────────────────────────── */
+.source-bar {
+  height: 6px;
+  border-radius: 3px;
+  display: flex;
+  overflow: hidden;
+  margin-top: 8px;
+  gap: 2px;
+}
+.source-bar-seg { height: 100%; border-radius: 3px; }
+
+/* ── Chart ───────────────────────────────────────────────────────── */
+.chart-wrap {
+  position: relative;
+  height: 160px;
+  margin-top: 4px;
+}
+
+/* ── Info panel (bench popup details) ───────────────────────────── */
+#info-panel {
+  padding: 1rem 1.125rem;
+}
+#info-panel h2 { margin-bottom: 0.5rem; }
+#info-content  { font-size: 0.78rem; color: var(--muted); line-height: 1.8; }
+#info-content strong { color: var(--text); }
+
+/* ── Leaflet overrides ───────────────────────────────────────────── */
+.leaflet-popup-content-wrapper {
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
+.leaflet-popup-content {
+  font-family: var(--font);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  min-width: 180px;
+}
+.popup-city {
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  #sidebar { display: none; }
+  .source-legend { display: none; }
+}

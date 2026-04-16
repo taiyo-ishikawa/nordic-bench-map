@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nordic Bench Map – Helsinki · Stockholm · Copenhagen · Oslo</title>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Google Fonts (Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ── Header ──────────────────────────────────────────────────── -->
+<header>
+  <h1>Nordic Bench Map</h1>
+
+  <div class="city-tabs">
+    <button class="city-tab active" data-city="all">All cities</button>
+    <button class="city-tab" data-city="helsinki">Helsinki</button>
+    <button class="city-tab" data-city="stockholm">Stockholm</button>
+    <button class="city-tab" data-city="copenhagen">Copenhagen</button>
+    <button class="city-tab" data-city="oslo">Oslo</button>
+  </div>
+
+  <div class="source-legend">
+    <span><span class="legend-dot" style="background:#f59e0b"></span>Municipal only</span>
+    <span><span class="legend-dot" style="background:#06b6d4"></span>OSM only</span>
+    <span><span class="legend-dot" style="background:#8b5cf6"></span>Both sources</span>
+    <span style="font-size:0.7rem;color:#9ca3af">(dot border = data source)</span>
+  </div>
+</header>
+
+<!-- ── Main layout ──────────────────────────────────────────────── -->
+<div class="main">
+
+  <!-- Map -->
+  <div id="map"></div>
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+
+    <!-- City cards -->
+    <div class="sidebar-section">
+      <h2>Cities</h2>
+      <div id="city-cards">
+        <!-- Populated by JS -->
+        <div style="color:#9ca3af;font-size:0.8rem;padding:8px 0">Loading data…</div>
+      </div>
+    </div>
+
+    <!-- Density chart -->
+    <div class="sidebar-section">
+      <h2>Bench density (per km²)</h2>
+      <div class="chart-wrap">
+        <canvas id="density-chart"></canvas>
+      </div>
+    </div>
+
+    <!-- Data sources -->
+    <div class="sidebar-section">
+      <h2>Data sources</h2>
+      <div style="font-size:0.75rem;color:#6b7280;line-height:1.9">
+        <div><strong style="color:#1a1d23">Helsinki</strong> – YLRE registry (WFS) + OSM</div>
+        <div><strong style="color:#1a1d23">Stockholm</strong> – Trafikkontoret Open Data (WFS) + OSM</div>
+        <div><strong style="color:#1a1d23">Copenhagen</strong> – Københavns Kommune (WFS) + OSM</div>
+        <div><strong style="color:#1a1d23">Oslo</strong> – Bymiljøetaten (ArcGIS) + OSM</div>
+        <div style="margin-top:8px;font-size:0.7rem;color:#9ca3af">
+          Municipal data: open licences per city.<br>
+          OSM data: <a href="https://www.openstreetmap.org/copyright" target="_blank">ODbL</a>.
+        </div>
+      </div>
+    </div>
+
+    <!-- Selected bench info -->
+    <div id="info-panel" class="sidebar-section">
+      <h2>Selected bench</h2>
+      <div id="info-content" style="color:#9ca3af;font-size:0.78rem">
+        Click a bench on the map to see details.
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

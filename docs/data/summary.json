@@ -1,0 +1,46 @@
+{
+  "helsinki": {
+    "label": "Helsinki",
+    "country": "Finland",
+    "total": 12541,
+    "municipal_only": 5759,
+    "osm_only": 3680,
+    "municipal_osm": 3102,
+    "density_per_km2": 58.33,
+    "area_km2": 215,
+    "osm_coverage_pct": 54.1
+  },
+  "stockholm": {
+    "label": "Stockholm",
+    "country": "Sweden",
+    "total": 6903,
+    "municipal_only": 0,
+    "osm_only": 6903,
+    "municipal_osm": 0,
+    "density_per_km2": 36.72,
+    "area_km2": 188,
+    "osm_coverage_pct": 100.0
+  },
+  "copenhagen": {
+    "label": "Copenhagen",
+    "country": "Denmark",
+    "total": 11740,
+    "municipal_only": 6153,
+    "osm_only": 2725,
+    "municipal_osm": 2862,
+    "density_per_km2": 136.51,
+    "area_km2": 86,
+    "osm_coverage_pct": 47.6
+  },
+  "oslo": {
+    "label": "Oslo",
+    "country": "Norway",
+    "total": 6665,
+    "municipal_only": 2569,
+    "osm_only": 2968,
+    "municipal_osm": 1128,
+    "density_per_km2": 14.68,
+    "area_km2": 454,
+    "osm_coverage_pct": 61.5
+  }
+}
