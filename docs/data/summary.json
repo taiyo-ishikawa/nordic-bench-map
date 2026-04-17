@@ -10,16 +10,16 @@
     "area_km2": 215,
     "osm_coverage_pct": 54.1
   },
-  "stockholm": {
-    "label": "Stockholm",
-    "country": "Sweden",
-    "total": 6903,
-    "municipal_only": 0,
-    "osm_only": 6903,
-    "municipal_osm": 0,
-    "density_per_km2": 36.72,
-    "area_km2": 188,
-    "osm_coverage_pct": 100.0
+  "tallinn": {
+    "label": "Tallinn",
+    "country": "Estonia",
+    "total": 7390,
+    "municipal_only": 285,
+    "osm_only": 6725,
+    "municipal_osm": 380,
+    "density_per_km2": 46.48,
+    "area_km2": 159,
+    "osm_coverage_pct": 96.1
   },
   "copenhagen": {
     "label": "Copenhagen",

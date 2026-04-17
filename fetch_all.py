@@ -36,7 +36,7 @@ import time
 from pathlib import Path
 
 from config import CITIES
-from scripts import fetch_helsinki, fetch_stockholm, fetch_copenhagen, fetch_oslo
+from scripts import fetch_helsinki, fetch_tallinn, fetch_copenhagen, fetch_oslo
 from scripts.fetch_osm import fetch_osm_benches
 from scripts.deduplicate import deduplicate, print_stats
 
@@ -45,7 +45,7 @@ DATA_DIR = Path("docs/data")
 # Map city key → municipal fetcher module
 FETCHERS = {
     "helsinki":   fetch_helsinki,
-    "stockholm":  fetch_stockholm,
+    "tallinn":    fetch_tallinn,
     "copenhagen": fetch_copenhagen,
     "oslo":       fetch_oslo,
 }

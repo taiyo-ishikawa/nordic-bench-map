@@ -12,16 +12,10 @@
   --text:    #1a1d23;
   --muted:   #6b7280;
 
-  /* City colours */
   --c-helsinki:   #2563eb;
-  --c-stockholm:  #16a34a;
+  --c-tallinn:    #16a34a;
   --c-copenhagen: #dc2626;
   --c-oslo:       #9333ea;
-
-  /* Source colours (legend) */
-  --s-municipal: #f59e0b;
-  --s-osm:       #06b6d4;
-  --s-merged:    #8b5cf6;
 }
 
 body {
@@ -34,7 +28,7 @@ body {
   overflow:    hidden;
 }
 
-/* ── Header ──────────────────────────────────────────────────────── */
+/* ── Header ────────────────────────────────────────────────────────── */
 header {
   background: var(--surface);
   border-bottom: 1px solid var(--border);
@@ -42,73 +36,72 @@ header {
   height: 52px;
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
   flex-shrink: 0;
   z-index: 1000;
 }
 
 header h1 {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   letter-spacing: -0.01em;
   white-space: nowrap;
 }
 
-.city-tabs {
-  display: flex;
-  gap: 4px;
-}
+/* City tabs */
+.city-tabs { display: flex; gap: 3px; }
 
 .city-tab {
   border: none;
   border-radius: 6px;
-  padding: 5px 13px;
-  font-size: 0.8rem;
+  padding: 5px 12px;
+  font-size: 0.78rem;
   font-weight: 600;
   cursor: pointer;
   background: var(--bg);
   color: var(--muted);
   transition: background 0.15s, color 0.15s;
 }
-.city-tab.active       { color: #fff; }
-.city-tab[data-city="all"]         { background: #374151; color: #fff; }
+.city-tab[data-city="all"]         { --cc: #374151; }
 .city-tab[data-city="helsinki"]    { --cc: var(--c-helsinki); }
-.city-tab[data-city="stockholm"]   { --cc: var(--c-stockholm); }
+.city-tab[data-city="tallinn"]     { --cc: var(--c-tallinn); }
 .city-tab[data-city="copenhagen"]  { --cc: var(--c-copenhagen); }
 .city-tab[data-city="oslo"]        { --cc: var(--c-oslo); }
-.city-tab.active { background: var(--cc); }
+.city-tab.active { background: var(--cc); color: #fff; }
 
-.source-legend {
+/* View toggle */
+.view-toggle {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  gap: 2px;
   margin-left: auto;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 3px;
+}
+
+.view-btn {
+  border: none;
+  border-radius: 5px;
+  padding: 4px 11px;
   font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: transparent;
   color: var(--muted);
+  transition: background 0.15s, color 0.15s;
 }
-.legend-dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  display: inline-block;
-  margin-right: 4px;
-}
+.view-btn.active { background: var(--surface); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,.1); }
 
-/* ── Layout ──────────────────────────────────────────────────────── */
-.main {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
-}
+/* ── Layout ─────────────────────────────────────────────────────────── */
+.main { display: flex; flex: 1; overflow: hidden; }
 
-/* ── Map ─────────────────────────────────────────────────────────── */
-#map {
-  flex: 1;
-  height: 100%;
-}
+/* ── Map ──────────────────────────────────────────────────────────── */
+#map { flex: 1; height: 100%; }
 
-/* ── Sidebar ─────────────────────────────────────────────────────── */
+/* ── Sidebar ──────────────────────────────────────────────────────── */
 #sidebar {
-  width: 320px;
+  width: 300px;
   min-width: 260px;
   background: var(--surface);
   border-left: 1px solid var(--border);
@@ -119,109 +112,128 @@ header h1 {
 }
 
 .sidebar-section {
-  padding: 1rem 1.125rem;
+  padding: 0.9rem 1rem;
   border-bottom: 1px solid var(--border);
 }
 
 .sidebar-section h2 {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--muted);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.65rem;
 }
 
-/* ── City stat cards ─────────────────────────────────────────────── */
+/* ── City cards ───────────────────────────────────────────────────── */
 .city-card {
   border-radius: 8px;
-  border: 1px solid var(--border);
-  padding: 0.75rem;
-  margin-bottom: 0.5rem;
+  border: 1.5px solid var(--border);
+  padding: 0.65rem 0.75rem;
+  margin-bottom: 0.45rem;
   cursor: pointer;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
-.city-card:hover   { border-color: var(--muted); }
-.city-card.active  { border-width: 2px; }
-
-.city-card[data-city="helsinki"].active  { border-color: var(--c-helsinki);  }
-.city-card[data-city="stockholm"].active { border-color: var(--c-stockholm); }
-.city-card[data-city="copenhagen"].active{ border-color: var(--c-copenhagen);}
-.city-card[data-city="oslo"].active      { border-color: var(--c-oslo);      }
+.city-card:hover  { border-color: #aaa; }
+.city-card[data-city="helsinki"].active  { border-color: var(--c-helsinki); }
+.city-card[data-city="tallinn"].active   { border-color: var(--c-tallinn); }
+.city-card[data-city="copenhagen"].active{ border-color: var(--c-copenhagen); }
+.city-card[data-city="oslo"].active      { border-color: var(--c-oslo); }
 
 .city-card-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
+  gap: 7px;
+  margin-bottom: 5px;
 }
 .city-dot {
-  width: 10px; height: 10px;
+  width: 9px; height: 9px;
   border-radius: 50%;
   flex-shrink: 0;
 }
-.city-card[data-city="helsinki"]   .city-dot { background: var(--c-helsinki);  }
-.city-card[data-city="stockholm"]  .city-dot { background: var(--c-stockholm); }
-.city-card[data-city="copenhagen"] .city-dot { background: var(--c-copenhagen);}
-.city-card[data-city="oslo"]       .city-dot { background: var(--c-oslo);      }
+.city-card[data-city="helsinki"]   .city-dot { background: var(--c-helsinki); }
+.city-card[data-city="tallinn"]    .city-dot { background: var(--c-tallinn); }
+.city-card[data-city="copenhagen"] .city-dot { background: var(--c-copenhagen); }
+.city-card[data-city="oslo"]       .city-dot { background: var(--c-oslo); }
 
-.city-card-name  { font-weight: 700; font-size: 0.875rem; }
-.city-card-total { margin-left: auto; font-size: 1.1rem; font-weight: 800; }
+.city-card-name  { font-weight: 700; font-size: 0.84rem; }
+.city-card-total { margin-left: auto; font-size: 1rem; font-weight: 800; }
 
 .stat-row {
   display: flex;
   justify-content: space-between;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--muted);
-  line-height: 1.7;
+  line-height: 1.75;
 }
 .stat-row span:last-child { font-weight: 600; color: var(--text); }
 
-/* ── Source breakdown bar ────────────────────────────────────────── */
-.source-bar {
-  height: 6px;
-  border-radius: 3px;
-  display: flex;
-  overflow: hidden;
-  margin-top: 8px;
-  gap: 2px;
-}
-.source-bar-seg { height: 100%; border-radius: 3px; }
+/* ── Chart ────────────────────────────────────────────────────────── */
+.chart-wrap { position: relative; height: 150px; margin-top: 2px; }
 
-/* ── Chart ───────────────────────────────────────────────────────── */
-.chart-wrap {
-  position: relative;
-  height: 160px;
-  margin-top: 4px;
+/* ── District detail ──────────────────────────────────────────────── */
+#district-content .district-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
 }
+#district-content .stat-row { font-size: 0.72rem; }
 
-/* ── Info panel (bench popup details) ───────────────────────────── */
-#info-panel {
-  padding: 1rem 1.125rem;
-}
-#info-panel h2 { margin-bottom: 0.5rem; }
-#info-content  { font-size: 0.78rem; color: var(--muted); line-height: 1.8; }
+/* ── Bench info panel ─────────────────────────────────────────────── */
+#info-content { font-size: 0.76rem; color: var(--muted); line-height: 1.8; }
 #info-content strong { color: var(--text); }
 
-/* ── Leaflet overrides ───────────────────────────────────────────── */
+/* ── Hint text ────────────────────────────────────────────────────── */
+.hint { color: var(--muted); font-size: 0.76rem; line-height: 1.6; }
+
+/* ── Data source list ─────────────────────────────────────────────── */
+.source-list { font-size: 0.72rem; color: var(--muted); line-height: 1.9; }
+.source-list strong { color: var(--text); margin-right: 4px; }
+.source-note { margin-top: 6px; font-size: 0.68rem; }
+.source-note a { color: var(--muted); }
+
+/* ── Choropleth legend ────────────────────────────────────────────── */
+#district-legend {
+  position: absolute;
+  bottom: 24px;
+  left: 12px;
+  z-index: 1000;
+  background: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+  font-family: var(--font);
+  font-size: 0.72rem;
+  color: var(--text);
+  line-height: 1.6;
+  display: none;
+}
+#district-legend.visible { display: block; }
+#district-legend .legend-title { font-weight: 700; margin-bottom: 4px; }
+#district-legend .legend-row { display: flex; align-items: center; gap: 6px; }
+#district-legend .legend-swatch {
+  width: 14px; height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* ── Leaflet overrides ────────────────────────────────────────────── */
 .leaflet-popup-content-wrapper {
   border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 20px rgba(0,0,0,.12);
 }
 .leaflet-popup-content {
   font-family: var(--font);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   line-height: 1.6;
-  min-width: 180px;
+  min-width: 160px;
 }
-.popup-city {
-  font-weight: 700;
-  font-size: 0.85rem;
-  margin-bottom: 4px;
-}
+.popup-city  { font-weight: 700; font-size: 0.82rem; margin-bottom: 3px; }
+.popup-table { width: 100%; border-collapse: collapse; }
+.popup-table td { padding: 1px 0; }
+.popup-table td:first-child { color: var(--muted); padding-right: 8px; white-space: nowrap; }
 
-/* ── Responsive ─────────────────────────────────────────────────── */
+/* ── Responsive ───────────────────────────────────────────────────── */
 @media (max-width: 700px) {
   #sidebar { display: none; }
-  .source-legend { display: none; }
 }

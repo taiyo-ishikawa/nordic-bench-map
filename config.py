@@ -57,34 +57,53 @@ CITIES = {
         },
     },
 
-    "stockholm": {
-        "label":    "Stockholm",
-        "country":  "Sweden",
-        "bbox":     (59.20, 17.80, 59.45, 18.20),
-        "area_km2": 188,
-        "epsg":     "EPSG:3006",  # SWEREF 99 TM
-        "osm_keyword": "bänk",
+    "tallinn": {
+        "label":    "Tallinn",
+        "country":  "Estonia",
+        "bbox":     (59.35, 24.55, 59.52, 24.95),
+        "area_km2": 159,
+        "epsg":     "EPSG:4326",  # ArcGIS returns WGS84 when outSR=4326
+        "osm_keyword": "pink",   # Estonian word for bench
         "municipal_api": {
-            # STATUS (April 2026): No bench layer found in Trafikkontoret WFS.
-            #
-            # API key obtained from https://openstreetgs.stockholm.se/
-            # Key: ba3fc144-2f3c-46a0-9a0d-79256c75a9be
-            #
-            # The Trafikkontoret WFS (87 layers) covers road/traffic infrastructure only.
-            # It includes waste bins (Skrapkorg), toilets (Toalett), lighting
-            # (Belysningsmontage) – but NOT benches (bänkar).
-            #
-            # Stockholm bench data is managed by a different city department
-            # (likely Exploateringskontoret / Parkförvaltningen) and is not
-            # currently published as open data. Stockholm is OSM-only for now.
-            #
-            # To check for new layers in the future:
-            #   GET https://openstreetgs.stockholm.se/geoservice/api/{KEY}/wfs
-            #       ?service=WFS&version=2.0.0&request=GetCapabilities
-            "type": "none",
-            "api_key": "ba3fc144-2f3c-46a0-9a0d-79256c75a9be",
-            "base_url": "https://openstreetgs.stockholm.se/geoservice/api/{api_key}/wfs",
-            "layers": [],
+            # Confirmed (April 2026): Tallinn City ArcGIS FeatureServer at gis.tallinn.ee
+            # Two sources combined:
+            #   1. linnamööbel – city-wide street furniture registry (118 benches, tyyp='Pink')
+            #   2. Põhja_Tallinn_LOV_Pingid – Põhja-Tallinn district bench inventory (547 benches)
+            "type": "arcgis_featureserver",
+            "layers": [
+                {
+                    "base_url": (
+                        "https://gis.tallinn.ee/arcgis/rest/services/"
+                        "Hosted/linnam%C3%B6%C3%B6bel/FeatureServer/0/query"
+                    ),
+                    "where": "tyyp = 'Pink'",
+                    "source_tag": "Tallinn_linnamööbel",
+                    "field_map": {
+                        "feature_id":        "objectid",
+                        "bench_type":        "tyyp",
+                        "material":          "mudel",
+                        "location_name":     "asukoht",
+                        "maintenance_class": None,
+                        "updated_date":      None,
+                    },
+                },
+                {
+                    "base_url": (
+                        "https://gis.tallinn.ee/arcgis/rest/services/"
+                        "Hosted/P%C3%B5hja_Tallinn_LOV_Pingid_hooldajale/FeatureServer/40/query"
+                    ),
+                    "where": "1=1",
+                    "source_tag": "Tallinn_PõhjaTallinn",
+                    "field_map": {
+                        "feature_id":        "objectid",
+                        "bench_type":        "tyyp",
+                        "material":          "tootja",
+                        "location_name":     "markused",
+                        "maintenance_class": None,
+                        "updated_date":      "editdate",
+                    },
+                },
+            ],
         },
     },
 
