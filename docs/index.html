@@ -5,25 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nordic Bench Map – Helsinki · Tallinn · Copenhagen · Oslo</title>
 
-  <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-
-  <!-- Leaflet.heat -->
   <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
-
-  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<!-- ── Header ──────────────────────────────────────────────────────── -->
 <header>
   <h1>Nordic Bench Map</h1>
 
@@ -35,56 +26,71 @@
     <button class="city-tab" data-city="oslo">Oslo</button>
   </div>
 
-  <div class="view-toggle">
-    <button class="view-btn active" data-view="points">Points</button>
-    <button class="view-btn" data-view="heatmap">Heatmap</button>
-    <button class="view-btn" data-view="districts">Districts</button>
+  <div class="header-right">
+    <div class="view-toggle">
+      <button class="view-btn active" data-view="points">Points</button>
+      <button class="view-btn" data-view="heatmap">Heatmap</button>
+      <button class="view-btn" data-view="districts">Districts</button>
+    </div>
   </div>
 </header>
 
-<!-- ── Main layout ──────────────────────────────────────────────────── -->
 <div class="main">
-  <div id="map"></div>
 
+  <!-- Map -->
+  <div id="map">
+    <!-- District legend (in-map) -->
+    <div id="legend-box" style="display:none"></div>
+  </div>
+
+  <!-- Sidebar -->
   <aside id="sidebar">
 
-    <!-- City overview cards -->
-    <div class="sidebar-section" id="section-overview">
-      <h2>Overview</h2>
+    <!-- City cards -->
+    <div class="sidebar-section">
+      <h2>Cities</h2>
       <div id="city-cards"></div>
     </div>
 
-    <!-- Density comparison chart -->
+    <!-- Density chart -->
     <div class="sidebar-section">
       <h2>Bench density (per km²)</h2>
-      <div class="chart-wrap">
-        <canvas id="density-chart"></canvas>
-      </div>
+      <div class="chart-wrap"><canvas id="density-chart"></canvas></div>
     </div>
 
-    <!-- District detail panel (shown in Districts view) -->
+    <!-- Metric selector (Districts only) -->
+    <div class="sidebar-section" id="metric-row" style="display:none">
+      <h2>Choropleth metric</h2>
+      <div class="metric-toggle">
+        <button class="metric-btn active" data-metric="density">Bench density</button>
+        <button class="metric-btn" data-metric="percapita">Per 1,000 people</button>
+      </div>
+      <p class="hint" style="margin-top:6px">Per-capita available for Tallinn and Oslo only.</p>
+    </div>
+
+    <!-- District detail -->
     <div class="sidebar-section" id="section-district" style="display:none">
-      <h2>District detail</h2>
+      <h2>District</h2>
       <div id="district-content">
-        <p class="hint">Click a district on the map.</p>
+        <p class="hint">Hover over a district, click to pin details.</p>
       </div>
     </div>
 
-    <!-- Bench detail panel -->
+    <!-- Bench detail -->
     <div class="sidebar-section" id="info-panel">
       <h2>Selected bench</h2>
       <div id="info-content" class="hint">Click a bench on the map.</div>
     </div>
 
-    <!-- Data sources -->
+    <!-- Sources -->
     <div class="sidebar-section">
       <h2>Data sources</h2>
       <div class="source-list">
         <div><strong>Helsinki</strong> YLRE registry (WFS) + OSM</div>
-        <div><strong>Tallinn</strong> City ArcGIS (linnamööbel) + OSM</div>
+        <div><strong>Tallinn</strong> City ArcGIS + OSM</div>
         <div><strong>Copenhagen</strong> PUMA registry (WFS) + OSM</div>
         <div><strong>Oslo</strong> Bymiljøetaten (ArcGIS) + OSM</div>
-        <div class="source-note">OSM data: <a href="https://www.openstreetmap.org/copyright" target="_blank">ODbL</a></div>
+        <div class="source-note">OSM: <a href="https://www.openstreetmap.org/copyright" target="_blank">ODbL</a></div>
       </div>
     </div>
 
